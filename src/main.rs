@@ -1,27 +1,20 @@
 use actix_web::{
-    http::{header::ContentType, StatusCode},
+    http::{header::ContentType},
     web, App, HttpResponse, HttpServer, Responder,
 };
 use bson::Document;
-use solana_client::rpc_client::GetConfirmedSignaturesForAddress2Config;
-use solana_client::rpc_client::RpcClient;
-use solana_client::rpc_request::RpcError;
-use solana_client::rpc_response::RpcConfirmedTransactionStatusWithSignature;
-use solana_program::clock::UnixTimestamp;
+use solana_client::rpc_client::{GetConfirmedSignaturesForAddress2Config,RpcClient};
+
 use solana_program::pubkey::Pubkey;
-use solana_program::slot_history::Slot;
-use solana_sdk::transaction::TransactionError;
+
 use solana_sdk::{
     commitment_config::CommitmentConfig,
-    signature::{Keypair, Signature},
-    system_transaction,
+    signature::{ Signature},
 };
 use solana_transaction_status::UiTransactionEncoding;
 use solana_transaction_status::{
     option_serializer::OptionSerializer, EncodedConfirmedTransactionWithStatusMeta,
 };
-use std::error::Error;
-use std::fmt::Display;
 use std::str::FromStr;
 use std::sync::mpsc;
 
@@ -32,8 +25,7 @@ use std::thread;
 
 use bson::doc;
 
-use serde::{Deserialize, Serialize};
-use serde_json::json;
+
 
 pub async fn get_data(info: web::Json<ParsedData>) -> impl Responder {
     // RpcClient endpoint
@@ -59,7 +51,7 @@ pub async fn get_data(info: web::Json<ParsedData>) -> impl Responder {
     let (tx1, rx2) = mpsc::channel();
 
     thread::spawn(move || {
-        let signatures =
+        let _signatures =
             match rpc_client.get_signatures_for_address_with_config(&chingari_token_id, config) {
                 Ok(data) => tx.send(data).unwrap(),
                 Err(_) => {
@@ -108,10 +100,10 @@ pub async fn get_data(info: web::Json<ParsedData>) -> impl Responder {
     let mut fiter_txn: Vec<EncodedConfirmedTransactionWithStatusMeta> = Vec::new();
 
     for data in received {
-        let somthing = match data.transaction.meta {
+        let _somthing = match data.transaction.meta {
             Some(ref a) => match &a.pre_token_balances {
                 OptionSerializer::Some(a) => {
-                    if a.len() == 0 {
+                    if a.is_empty() {
                         fiter_txn.push(data);
                     }
                 }
@@ -142,7 +134,7 @@ pub async fn get_data(info: web::Json<ParsedData>) -> impl Responder {
                         },
                         _ => {
                             doc! {
-                                "none2":"none",
+                                "none":"none",
                             }
                         },
 
