@@ -29,7 +29,7 @@ Steps -
 6. The user's gari token ATA has a balance of "amount: "0"" after the transaction (post token balance) since 0.000000001 gari token was airdropped to the user's gari ATA, the amount is near to 0, therefore it appears as "amount: "0"" on the transaction's meta data.
 7. Get the token owner from the post token balances 'Vec' if the aforementioned is true for the transaction, which indicates that this is a new user.
 
-#Note
+# Note
 This application retrieves the most recent 1000 signatures associated with the GARI token, which receives thousands of signatures every day. However, the RpcClient can only provide us with about 1000 recent signatures at once . In order to obtain an older signature, you must give the last signature of  into the RPC call ('get signatures for address with config()') with the argument 'before: last signature.
 You will receive 2000 signatures if you repeat this process twice. If you perform it three times, you will receive 3000 signatures, and so on.
 The software needs a lot of signatures if we enter really historical dates, such start date and end date from a few months ago.
