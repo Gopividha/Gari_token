@@ -16,7 +16,7 @@ Steps -
 * url path :127.0.0.1:8080/get_new_users_data
 * jsob blob --{
   "start_date":"2022-08-04",
-  "end_date": "2022-11-14"
+  "end_date": "2022-11-18"
 }
 
 ### check new users from transactions.

@@ -38,7 +38,7 @@ pub async fn get_data(info: web::Json<ParsedData>) -> impl Responder {
     let config = GetConfirmedSignaturesForAddress2Config {
         before: None,
         until: None,
-        limit: Some(50),
+        limit: Some(100),
         commitment: Some(CommitmentConfig::confirmed()),
     };
 
@@ -77,8 +77,7 @@ pub async fn get_data(info: web::Json<ParsedData>) -> impl Responder {
         let start_date = data.start_date;
         let end_date = data.end_date;
 
-        // let start_date ="2022-08-04".to_string();
-        // let end_date ="2022-11-14".to_string();
+   
 
         let (start, end) = ParsedData {
             start_date,
